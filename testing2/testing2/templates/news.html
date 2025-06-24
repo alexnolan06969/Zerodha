@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Alerts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="back-button">
+        <a href="/">
+            <span class="back-logo">🏠</span> Back to Home
+        </a>
+    </div>
+
+    <div class="watchlist-button">
+        <a href="/news/watchlist" class="primary-button">
+            <i class="fas fa-eye"></i> View Watchlist News
+        </a>
+    </div>
+
+    <h1 class="news-heading">News Alerts</h1>
+
+    <div id="news-container" class="news-container">
+        {% for article in news %}
+            <div class="news-card">
+                <h2 class="headline">{{ article.headline }}</h2>
+                <p class="company"><strong>Company:</strong> {{ article.company_name }} ({{ article.ticker_symbol }})</p>
+                <p class="date"><strong>Date:</strong> {{ article.date_posted }}</p>
+            </div>
+        {% else %}
+            <p>No news available.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

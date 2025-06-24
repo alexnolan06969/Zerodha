@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - TradeNexus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>TradeNexus</h1>
+        </div>
+        <div class="nav-items">
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+            <a href="{{ url_for('dashboard') }}" class="nav-link active">Dashboard</a>
+            <a href="{{ url_for('index') }}" class="nav-link">Trading</a>
+            <a href="{{ url_for('get_news') }}" class="nav-link">News</a>
+        </div>
+        <div class="user-profile">
+            <span class="user-name">Jane Smith</span>
+        </div>
+    </nav>
+
+    <div class="back-button">
+        <a href="{{ url_for('index') }}" class="btn">Back to Trading</a>
+    </div>
+
+    <main class="dashboard-content">
+        <!-- Updated Portfolio Overview using market indices style -->
+        <div class="portfolio-summary">
+            <h2>Portfolio Overview</h2>
+            <div class="indices-grid">
+                <div class="index-card">
+                    <div class="index-header">
+                        <h3>Current Value</h3>
+                    </div>
+                    <span class="index-value">₹{{ portfolio.current_value }}</span>
+                </div>
+                <div class="index-card">
+                    <div class="index-header">
+                        <h3>Total Invested</h3>
+                    </div>
+                    <span class="index-value">₹{{ portfolio.total_invested }}</span>
+                </div>
+                <!-- Removed Available Balance card -->
+            </div>
+        </div>
+
+        <div class="user-summary">
+            <h2>User Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Name</h3>
+                    <span>{{ user_summary.name }}</span>
+                </div>
+                <div class="summary-card">
+                    <h3>Email</h3>
+                    <span>{{ user_summary.email }}</span>
+                </div>
+                <div class="summary-card">
+                    <h3>Balance</h3>
+                    <span>₹{{ user_summary.balance }}</span>
+                </div>
+                <div class="summary-card">
+                    <h3>Gain/Loss (%)</h3>
+                    <span class="{% if user_summary.gain_loss_percentage >= 0 %}positive{% else %}negative{% endif %}">
+                        {{ user_summary.gain_loss_percentage }}%
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="market-indices">
+            <h2>Market Indices</h2>
+            <div class="indices-grid">
+                <div class="index-card">
+                    <div class="index-header">
+                        <h3>NIFTY 50</h3>
+                        <span class="index-value">18,245.30</span>
+                    </div>
+                    <span class="change positive">+125.45 (0.68%)</span>
+                </div>
+                <div class="index-card">
+                    <div class="index-header">
+                        <h3>SENSEX</h3>
+                        <span class="index-value">61,795.04</span>
+                    </div>
+                    <span class="change positive">+375.25 (0.61%)</span>
+                </div>
+                <div class="index-card">
+                    <div class="index-header">
+                        <h3>BANK NIFTY</h3>
+                        <span class="index-value">42,450.80</span>
+                    </div>
+                    <span class="change negative">-125.30 (0.29%)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="holdings-summary">
+            <h2>Your Holdings</h2>
+            <div class="holdings-table">
+                <div class="table-header">
+                    <div class="col">Stock</div>
+                    <div class="col">Qty</div>
+                    <div class="col">Avg. Cost</div>
+                    <div class="col">LTP</div>
+                    <div class="col">Current Value</div>
+                    <div class="col">P&L</div>
+                </div>
+                <div class="table-row">
+                    <div class="col">RELIANCE</div>
+                    <div class="col">10</div>
+                    <div class="col">₹2,350.00</div>
+                    <div class="col">₹2,456.75</div>
+                    <div class="col">₹24,567.50</div>
+                    <div class="col positive">+₹1,067.50</div>
+                </div>
+                <div class="table-row">
+                    <div class="col">TCS</div>
+                    <div class="col">5</div>
+                    <div class="col">₹3,450.00</div>
+                    <div class="col">₹3,567.80</div>
+                    <div class="col">₹17,839.00</div>
+                    <div class="col positive">+₹589.00</div>
+                </div>
+                <div class="table-row">
+                    <div class="col">HDFC BANK</div>
+                    <div class="col">15</div>
+                    <div class="col">₹1,620.00</div>
+                    <div class="col">₹1,678.45</div>
+                    <div class="col">₹25,176.75</div>
+                    <div class="col positive">+₹876.75</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <h2>Recent Activity</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon buy">B</div>
+                    <div class="activity-details">
+                        <p class="activity-title">Bought RELIANCE x 2</p>
+                        <p class="activity-time">Today, 10:30 AM</p>
+                    </div>
+                    <div class="activity-value">₹4,913.50</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon sell">S</div>
+                    <div class="activity-details">
+                        <p class="activity-title">Sold TCS x 1</p>
+                        <p class="activity-time">Today, 09:45 AM</p>
+                    </div>
+                    <div class="activity-value">₹3,567.80</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon buy">B</div>
+                    <div class="activity-details">
+                        <p class="activity-title">Bought HDFC BANK x 5</p>
+                        <p class="activity-time">Yesterday, 03:15 PM</p>
+                    </div>
+                    <div class="activity-value">₹8,392.25</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trading Activity Summary Section -->
+        <div class="trading-activity-summary">
+            <h2>Trading Activity Summary</h2>
+            <p>Total Orders: {{ trading_activity.total_orders }}</p>
+            <p>Executed Orders: {{ trading_activity.executed_orders }}</p>
+            <p>Cancelled Orders: {{ trading_activity.cancelled_orders }}</p>
+            <p>Total Transactions: {{ trading_activity.total_transactions }}</p>
+            <p>Successful Transactions: {{ trading_activity.successful_transactions }}</p>
+        </div>
+
+        <!-- Executed Orders Summary -->
+        <div class="executed-orders">
+            <h2>Executed Orders Summary</h2>
+            <div class="orders-table">
+                <div class="table-header">
+                    <div class="col">Ticker Symbol</div>
+                    <div class="col">Total Quantity</div>
+                    <div class="col">Average Price</div>
+                    <div class="col">Orders Count</div>
+                </div>
+                {% for order in executed_orders %}
+                <div class="table-row">
+                    <div class="col">{{ order.ticker_symbol }}</div>
+                    <div class="col">{{ order.total_quantity }}</div>
+                    <div class="col">₹{{ order.average_price | round(2) }}</div>
+                    <div class="col">{{ order.number_of_orders }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</body>
+<style>
+    .back-button {
+        margin: 10px;
+        text-align: left;
+    }
+    .back-button .btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .back-button .btn:hover {
+        background-color: #0056b3;
+    }
+    .user-summary {
+        margin: 20px 0;
+    }
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .summary-card {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+    .summary-card h3 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+    .summary-card span {
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+    .positive {
+        color: green;
+    }
+    .negative {
+        color: red;
+    }
+</style>
+</html>
